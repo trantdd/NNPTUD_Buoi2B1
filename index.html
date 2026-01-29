@@ -4,29 +4,180 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Danh Sách Sản Phẩm</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>📦 Danh Sách Sản Phẩm</h1>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand mb-0 h1">📦 Cửa Hàng Sản Phẩm</span>
+      </div>
+    </nav>
 
-      <div class="stats">
-        <div class="stat-item">
-          <span class="stat-label">Tổng sản phẩm:</span>
-          <span class="stat-value" id="totalProducts">0</span>
+    <!-- Main Content -->
+    <div class="container py-5">
+      <!-- Header Section -->
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <h1 class="display-5 fw-bold mb-2">Danh Sách Sản Phẩm</h1>
+          <p class="text-muted">Khám phá bộ sưu tập sản phẩm chất lượng cao</p>
+        </div>
+        <div class="col-md-4 d-flex align-items-center">
+          <div class="stat-box w-100">
+            <div class="stat-item">
+              <span class="stat-label">Tổng sản phẩm:</span>
+              <span class="stat-value" id="totalProducts">0</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div id="loading" class="loading">
-        <div class="spinner"></div>
-        <p>Đang tải dữ liệu...</p>
+      <!-- Search Section -->
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <div class="input-group input-group-lg">
+            <span class="input-group-text bg-white border-end-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.003-.003.007-.007.012-.011a6.5 6.5 0 0 0 1.385-1.387zm-5.092-3.354a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"
+                />
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control border-start-0 ps-0"
+              placeholder="Tìm kiếm theo tên sản phẩm..."
+              onchange="handleSearch()"
+              oninput="handleSearch()"
+            />
+          </div>
+        </div>
       </div>
 
-      <div id="productList" class="product-list">
-        <!-- Danh sách sản phẩm sẽ được load vào đây -->
+      <!-- Sorting Section -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <span class="text-muted fw-bold">Sắp xếp theo:</span>
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm"
+                onclick="sortByName('asc')"
+              >
+                📝 Tên (A-Z)
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm"
+                onclick="sortByName('desc')"
+              >
+                📝 Tên (Z-A)
+              </button>
+            </div>
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn btn-outline-success btn-sm"
+                onclick="sortByPrice('asc')"
+              >
+                💰 Giá (Thấp)
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-success btn-sm"
+                onclick="sortByPrice('desc')"
+              >
+                💰 Giá (Cao)
+              </button>
+            </div>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm ms-2"
+              onclick="resetSort()"
+            >
+              🔄 Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Đang tải...</span>
+        </div>
+        <p class="mt-3 text-muted">Đang tải dữ liệu...</p>
+      </div>
+
+      <!-- Products Table -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">📋 Bảng Quản Lý Sản Phẩm</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table
+              class="table table-hover table-striped mb-0"
+              id="productTable"
+            >
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col" class="text-center" style="width: 5%">ID</th>
+                  <th scope="col" style="width: 10%">Hình ảnh</th>
+                  <th scope="col" style="width: 25%">Tên sản phẩm</th>
+                  <th scope="col" style="width: 35%">Mô tả</th>
+                  <th scope="col" class="text-center" style="width: 10%">
+                    Danh mục
+                  </th>
+                  <th scope="col" class="text-center" style="width: 10%">
+                    Giá
+                  </th>
+                  <th scope="col" class="text-center" style="width: 5%">
+                    Thao tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="productList">
+                <!-- Danh sách sản phẩm sẽ được load vào đây -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- No Results Message -->
+          <div
+            id="noResults"
+            class="alert alert-info text-center m-3"
+            style="display: none"
+          >
+            <h5>Không tìm thấy sản phẩm</h5>
+            <p class="mb-0">Hãy thử tìm kiếm với từ khóa khác</p>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-light py-4 border-top mt-5">
+      <div class="container text-center text-muted">
+        <p class="mb-0">
+          &copy; 2026 Cửa Hàng Sản Phẩm. Tất cả quyền được bảo lưu.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
