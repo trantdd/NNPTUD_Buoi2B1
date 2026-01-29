@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="main.js"></script>
+  </head>
+
+  <body>
+    <h2>Posts Management</h2>
+    <div>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>views</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Post Form</h3>
+      <input type="text" placeholder="id (để trống để tự tăng)" id="id_txt" />
+      <input type="text" placeholder="title" id="title_txt" />
+      <input type="text" placeholder="views" id="views_txt" />
+      <input type="submit" value="Save" onclick="Save()" />
+    </div>
+
+    <hr />
+
+    <h2>Comments Management</h2>
+    <div>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>text</th>
+            <th>postId</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="comment-table-body"></tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Comment Form</h3>
+      <input
+        type="text"
+        placeholder="id (để trống để tự tăng)"
+        id="comment_id_txt"
+      />
+      <input type="text" placeholder="text" id="comment_text_txt" />
+      <input type="text" placeholder="postId" id="comment_postId_txt" />
+      <input type="submit" value="Save Comment" onclick="SaveComment()" />
+    </div>
+  </body>
+</html>
