@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sách Sản Phẩm</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>📦 Danh Sách Sản Phẩm</h1>
+
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Tổng sản phẩm:</span>
+          <span class="stat-value" id="totalProducts">0</span>
+        </div>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Đang tải dữ liệu...</p>
+      </div>
+
+      <div id="productList" class="product-list">
+        <!-- Danh sách sản phẩm sẽ được load vào đây -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
